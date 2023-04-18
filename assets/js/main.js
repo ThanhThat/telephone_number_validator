@@ -7,13 +7,20 @@
 
   formElement.addEventListener("submit", (e) => {
     e.preventDefault();
-    const phoneValue = phoneElement.value;
+    const phoneValue = phoneElement.value.trim();
 
-    const isPhoneNum = phoneNumberValidator(phoneValue);
-    if (isPhoneNum) {
-      result.textContent = `Result: ${phoneValue} is a phone number of US`;
+    // Kiem tra du lieu nguoi dung nhap vao co rong khong
+    const spaceRegex = /^\s*$/;
+
+    if (spaceRegex.test(phoneValue)) {
+      result.innerHTML = `<span style="color: red">Error: Empty string is not a valid phone number</span>`;
     } else {
-      result.textContent = `Result: ${phoneValue} is not a phone number of US`;
+      const isPhoneNum = phoneNumberValidator(phoneValue);
+      if (isPhoneNum) {
+        result.innerHTML = `Result: <span style="color: blue">${phoneValue}</span> is a phone number of US`;
+      } else {
+        result.innerHTML = `Error: <span style="color: red">${phoneValue}</span> is not a phone number of US`;
+      }
     }
   });
 })();
